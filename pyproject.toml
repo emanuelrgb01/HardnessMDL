@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "HardnessMDL"
+version = "0.1.0"
+description = "Instance hardness measures based on the Minimum Description Length (MDL) principle"
+readme = "README.md"
+license = { text = "GPL-2.0-or-later" }
+requires-python = ">=3.12, <3.14"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scikit-learn"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/emanuelrgb01/HardnessMDL"
+Repository = "https://github.com/emanuelrgb01/HardnessMDL"
+Issues = "https://github.com/emanuelrgb01/HardnessMDL/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
