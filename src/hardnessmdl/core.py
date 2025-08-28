@@ -12,10 +12,10 @@ class HardnessMDL(GMDL):
     """
     Instance hardness measures based on the Minimum Description Length principle.
 
-    This class implements an online learning algorithm that uses Online Kernel
-    Density Estimators (oKDE) to model the probability distribution of each
-    class. It classifies new samples based on the Minimum Description Length
-    (MDL) principle.
+    This class extends the GMDL learning algorithm by providing methods to
+    compute instance hardness measures derived from description lengths.
+    These measures quantify the difficulty of classifying individual
+    samples according to the MDL principle.
     """
 
     def __init__(self, n_classes: int, n_dims: int, seed: int = 42):
