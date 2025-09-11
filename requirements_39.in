@@ -1,0 +1,6 @@
+# Requires Python ==3.9
+numpy
+pandas
+scikit-learn
+pyhard
+ipykernel
