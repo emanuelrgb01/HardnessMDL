@@ -21,6 +21,37 @@ class HardnessMDL(GMDL):
     def __init__(self, n_classes: int, n_dims: int, seed: int = 42):
         super().__init__(n_classes, n_dims, seed)
 
+    def predict(self, features: np.ndarray) -> Prediction:
+        """
+        Predicts the class label for a single sample.
+
+        Args:
+            features: A 1D NumPy array of feature values.
+
+        Returns:
+            A Prediction dictionary containing the predicted 'label' and the
+            'description_lengths' for each class.
+        """
+        distances = self._get_distances(features)
+
+        description_lengths_unnormalized = np.array(
+            [self._L_hat(features, c, distances) for c in range(self.n_classes)]
+        )
+
+        l_total = np.sum(description_lengths_unnormalized)
+        if np.isclose(l_total, 0):
+            description_lengths = np.full(self.n_classes, 1.0 / self.n_classes)
+        else:
+            description_lengths = description_lengths_unnormalized / l_total
+
+        predicted_label = np.argmin(description_lengths)
+
+        return {
+            "label": predicted_label,
+            "description_lengths": description_lengths,
+            "description_lengths_unnormalized": description_lengths_unnormalized,
+        }
+
     def hardness(self, features: np.ndarray, label: int) -> dict[str, float]:
         """Compute multiple hardness measures for a given instance.
 
