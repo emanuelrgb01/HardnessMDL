@@ -209,21 +209,21 @@ datasets:
     n_features: 16
     class_attribute: class
     numeric_attributes:
-    - x-box
-    - y-box
+    - x_box
+    - y_box
     - width
     - high
     - onpix
-    - x-bar
-    - y-bar
+    - x_bar
+    - y_bar
     - x2bar
     - y2bar
     - xybar
     - x2ybr
     - xy2br
-    - x-ege
+    - xege
     - xegvy
-    - y-ege
+    - yege
     - yegvx
     categorical_attributes: []
     target_classes:
@@ -442,9 +442,9 @@ datasets:
     n_features: 3
     class_attribute: class
     numeric_attributes:
-    - B
-    - G
-    - R
+    - b
+    - g
+    - r
     categorical_attributes: []
     target_classes:
     - '1'
@@ -456,18 +456,18 @@ datasets:
     - wdbc.csv
     n_instances: 569
     n_features: 31
-    class_attribute: diagnosis
+    class_attribute: class
     numeric_attributes:
-    - radius_mean
-    - texture_mean
-    - perimeter_mean
-    - area_mean
-    - smoothness_mean
-    - compactness_mean
-    - concavity_mean
-    - concave points_mean
-    - symmetry_mean
-    - fractal_dimension_mean
+    - radius
+    - texture
+    - perimeter
+    - area
+    - smoothness
+    - compactness
+    - concavity
+    - concave_points
+    - symmetry
+    - fractal_dimension
     - radius_se
     - texture_se
     - perimeter_se
@@ -475,7 +475,7 @@ datasets:
     - smoothness_se
     - compactness_se
     - concavity_se
-    - concave points_se
+    - concave_points_se
     - symmetry_se
     - fractal_dimension_se
     - radius_worst
@@ -485,7 +485,7 @@ datasets:
     - smoothness_worst
     - compactness_worst
     - concavity_worst
-    - concave points_worst
+    - concave_points_worst
     - symmetry_worst
     - fractal_dimension_worst
     categorical_attributes: []
@@ -635,7 +635,7 @@ datasets:
     - Soil_Type32
     - Soil_Type33
     - Soil_Type34
-    - Soil_Tye35
+    - Soil_Type35
     - Soil_Type36
     - Soil_Type37
     - Soil_Type38

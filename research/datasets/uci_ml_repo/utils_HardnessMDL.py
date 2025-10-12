@@ -239,7 +239,7 @@ def read_datasets_from_config(
     df_list = [pd.read_csv(path) for path in path_list]
 
     if dry_run:
-        return pd.concat(df_list, ignore_index=True).sample(100)
+        return pd.concat(df_list, ignore_index=True).sample(150, random_state=42)
     return pd.concat(df_list, ignore_index=True)
 
 
