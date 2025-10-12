@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 from typing import Any, Dict, List
 from joblib import Parallel, delayed
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.model_selection import KFold, StratifiedKFold
 from scipy.stats import entropy
 
@@ -25,7 +25,7 @@ def load_dataset_config(path: str) -> dict:
     return dataset
 
 
-def _compute_description_lenght_fold(
+def _compute_description_length_fold(
     train_idx: np.ndarray,
     test_idx: np.ndarray,
     df: pd.DataFrame,
@@ -82,7 +82,7 @@ def _compute_description_lenght_fold(
     return results
 
 
-def compute_kfold_description_lenght(
+def compute_kfold_description_length(
     df: pd.DataFrame,
     feature_cols: List[str],
     label_col: str,
@@ -92,7 +92,7 @@ def compute_kfold_description_lenght(
     **kwargs: Dict[str, Any],
 ) -> List[Dict[str, Any]]:
     """
-    Parallel K-Fold Description Lenght computation.
+    Parallel K-Fold Description length computation.
     """
 
     class_names = sorted(df[label_col].unique().tolist())
@@ -112,7 +112,7 @@ def compute_kfold_description_lenght(
         splits = splitter.split(df)
 
     results_nested = Parallel(n_jobs=n_jobs, batch_size="auto")(
-        delayed(_compute_description_lenght_fold)(
+        delayed(_compute_description_length_fold)(
             train_idx,
             test_idx,
             df,
@@ -135,6 +135,10 @@ def transform_dl_string_to_columns(df: pd.DataFrame) -> pd.DataFrame:
     df_copy = df.copy()  # without side-effects
 
     df_copy["is_error"] = (df_copy["true_label"] != df_copy["label"]).astype(int)
+
+    df_copy["description_lengths_unnormalized"] = df_copy[
+        "description_lengths_unnormalized"
+    ].astype(str)
 
     df_copy["description_lengths_list"] = df_copy[
         "description_lengths_unnormalized"
@@ -193,11 +197,11 @@ def compute_hardness_measures(df):
         sorted_dls = np.sort(description_lengths)
         if len(sorted_dls) > 1:
             margin = sorted_dls[1] - sorted_dls[0]
-            description_lenght_margin = 1.0 - (margin / (np.sum(sorted_dls) + epsilon))
+            description_length_margin = 1.0 - (margin / (np.sum(sorted_dls) + epsilon))
         else:
-            description_lenght_margin = 0.0
+            description_length_margin = 0.0
 
-        description_lenght_true_cost = dl_true / (np.sum(description_lengths) + epsilon)
+        description_length_true_cost = dl_true / (np.sum(description_lengths) + epsilon)
 
         ideal_dist = np.full(n_classes, epsilon)
         ideal_dist[true_label_idx] = 1.0
@@ -215,8 +219,8 @@ def compute_hardness_measures(df):
                 "relative_position": rel_pos,
                 "pseudo_probability": pseudo_prob,
                 "normalized_entropy": norm_entropy,
-                "description_lenght_margin": description_lenght_margin,
-                "description_lenght_true_cost": description_lenght_true_cost,
+                "description_length_margin": description_length_margin,
+                "description_length_true_cost": description_length_true_cost,
                 "kullback_leibler_divergence": kullback_leibler_divergence,
             }
         )
@@ -226,3 +230,75 @@ def compute_hardness_measures(df):
 
 def process_df(df: pd.DataFrame) -> pd.DataFrame:
     return compute_hardness_measures(transform_dl_string_to_columns(df))
+
+
+def read_datasets_from_config(
+    config_path_list: list, dry_run: bool = False
+) -> pd.DataFrame:
+    path_list = ["datasets/" + path for path in config_path_list]
+    df_list = [pd.read_csv(path) for path in path_list]
+
+    if dry_run:
+        return pd.concat(df_list, ignore_index=True).sample(100)
+    return pd.concat(df_list, ignore_index=True)
+
+
+def one_hot_encode(
+    df: pd.DataFrame, categorical_attributes: list
+) -> tuple[pd.DataFrame, list[str], OneHotEncoder]:
+
+    encoder = OneHotEncoder(sparse_output=False)
+
+    encoded_array = encoder.fit_transform(df[categorical_attributes])
+    encoded_df = pd.DataFrame(
+        encoded_array, columns=encoder.get_feature_names_out(categorical_attributes)
+    )
+
+    df_encoded = pd.concat(
+        [
+            df.drop(columns=categorical_attributes).reset_index(drop=True),
+            encoded_df.reset_index(drop=True),
+        ],
+        axis=1,
+    )
+
+    new_columns = encoder.get_feature_names_out(categorical_attributes)
+
+    return df_encoded, new_columns, encoder
+
+
+def compute_instance_hardness_with_mdl(
+    config_all: dict, dataset_name: str, dry_run: bool = False
+):
+    config = config_all[dataset_name]
+    numerical_columns = config["numeric_attributes"]
+    categorical_columns = config["categorical_attributes"]
+
+    label_column = config["class_attribute"]
+
+    df = read_datasets_from_config(config["file_name"], dry_run)
+
+    categorical_transformed_columns = []
+    if categorical_columns:
+        df, categorical_transformed_columns, _ = one_hot_encode(df, categorical_columns)
+
+    description_lengths = compute_kfold_description_length(
+        df=df,
+        feature_cols=numerical_columns + categorical_transformed_columns,
+        label_col=label_column,
+        k=10,
+    )
+
+    df_description_lengths = (
+        pd.DataFrame(description_lengths).sort_values(by="index").reset_index(drop=True)
+    )
+
+    df_description_lengths.to_csv(
+        f"results/{dataset_name}_description_lengths.csv", index=False
+    )
+
+    df_measures = process_df(df_description_lengths)
+
+    df_measures.to_csv(f"results/{dataset_name}_hardness_mdl.csv", index=False)
+
+    return df_measures
