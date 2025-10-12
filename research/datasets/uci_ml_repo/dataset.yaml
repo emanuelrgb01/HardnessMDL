@@ -54,7 +54,7 @@ datasets:
     - iris.csv
     n_instances: 150
     n_features: 4
-    class_attribute: species
+    class_attribute: class
     numeric_attributes:
     - sepal_length
     - sepal_width
