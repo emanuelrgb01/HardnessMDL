@@ -24,8 +24,8 @@ datasets:
     target_classes:
     - <=50K
     - '>50K'
-    missing_values: true
-    notes: Some '?' values must be treated as missing values.
+    missing_values: false
+    notes: Some '?' values treated as missing values.
   contrac:
     file_name:
     - contrac.csv

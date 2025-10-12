@@ -270,6 +270,10 @@ def one_hot_encode(
 def compute_instance_hardness_with_mdl(
     config_all: dict, dataset_name: str, dry_run: bool = False
 ):
+    if dataset_name not in config_all:
+        print(f"[ERROR] Dataset '{dataset_name}' not in config.")
+        return None
+
     config = config_all[dataset_name]
     numerical_columns = config["numeric_attributes"]
     categorical_columns = config["categorical_attributes"]
@@ -284,7 +288,7 @@ def compute_instance_hardness_with_mdl(
 
     description_lengths = compute_kfold_description_length(
         df=df,
-        feature_cols=numerical_columns + categorical_transformed_columns,
+        feature_cols=numerical_columns + list(categorical_transformed_columns),
         label_col=label_column,
         k=10,
     )
@@ -300,5 +304,6 @@ def compute_instance_hardness_with_mdl(
     df_measures = process_df(df_description_lengths)
 
     df_measures.to_csv(f"results/{dataset_name}_hardness_mdl.csv", index=False)
+    print(f"DONE: {dataset_name}")
 
     return df_measures
