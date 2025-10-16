@@ -10,11 +10,11 @@ uci_ids = {
     # "wine": 109, # DONE
     # "libras": 181, # DONE
     # "wdbc": 17,  # DONE # Wisconsin Diagnostic Breast Cancer
-    # "contrac": 23,  # Contraceptive Method Choice
-    # "wine-red": 186,
-    # "wine-white": 187,
-    "letter": 59,
-    "adult": 2,
+    # "contrac": 23, # DONE  # Contraceptive Method Choice
+    # "wine-red": 186, # DONE 
+    # "wine-white": 187, # DONE 
+    # "letter": 59, # DONE 
+    # "adult": 2, # DONE 
     "miniboone": 199,
     "skin": 229,
     "covertype": 31,
