@@ -5,14 +5,14 @@ from datetime import datetime
 
 
 uci_ids = {
-    "fertility": 244,
-    "iris": 53,
-    "wine": 109,
-    "libras": 181,
-    "wdbc": 17,  # Wisconsin Diagnostic Breast Cancer
-    "contrac": 23,  # Contraceptive Method Choice
-    "wine-red": 186,
-    "wine-white": 187,
+    # "fertility": 244,  # DONE
+    # "iris": 53,  # DONE
+    # "wine": 109,  # DONE
+    # "libras": 181,  # DONE
+    # "wdbc": 17,  # Wisconsin Diagnostic Breast Cancer # DONE
+    # "contrac": 23,  # Contraceptive Method Choice # DONE
+    # "wine-red": 186,  # DONE
+    # "wine-white": 187, WIP
     "letter": 59,
     "adult": 2,
     # "miniboone": 199,
@@ -28,7 +28,7 @@ datasets = list(uci_ids.keys())
 dataset_config = utils_PyHard.load_dataset_config("dataset.yaml")
 
 for dataset in datasets:
-    print(datetime.now())
+    print(f"START {dataset}", datetime.now())
     df = utils_PyHard.compute_instance_hardness_with_pyhard(
         dataset_config, dataset, False
     )
