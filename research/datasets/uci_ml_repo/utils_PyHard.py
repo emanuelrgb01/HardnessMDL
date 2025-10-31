@@ -63,8 +63,8 @@ def compute_instance_hardness_by_models(
         n_folds=n_folds,
         n_iter=1,
         algo_list=[
-            # "svc_linear",
-            # "svc_rbf",
+            "svc_linear",
+            "svc_rbf",
             "random_forest",
             "gradient_boosting",
             "bagging",
@@ -72,8 +72,6 @@ def compute_instance_hardness_by_models(
             "mlp",
         ],
         parameters={
-            # "svc_linear": {"n_jobs": 1},
-            # "svc_rbf": {"n_jobs": 1},
             "random_forest": {"n_jobs": 1},
             "bagging": {"n_jobs": 1},
         },
