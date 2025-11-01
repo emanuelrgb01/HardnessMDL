@@ -1,0 +1,654 @@
+datasets:
+  adult:
+    file_name:
+    - adult.csv
+    n_instances: 48842
+    n_features: 14
+    class_attribute: income
+    numeric_attributes:
+    - age
+    - fnlwgt
+    - education-num
+    - capital-gain
+    - capital-loss
+    - hours-per-week
+    categorical_attributes:
+    - workclass
+    - education
+    - marital-status
+    - occupation
+    - relationship
+    - race
+    - sex
+    - native-country
+    target_classes:
+    - <=50K
+    - '>50K'
+    missing_values: false
+    notes: Some '?' values treated as missing values.
+  contrac:
+    file_name:
+    - contrac.csv
+    n_instances: 1473
+    n_features: 9
+    class_attribute: contraceptive_method_used
+    numeric_attributes:
+    - wife_age
+    - number_of_children_ever_born
+    categorical_attributes:
+    - wife_education
+    - husband_education
+    - wife_religion
+    - wife_now_working
+    - husband_occupation
+    - standard_of_living_index
+    - media_exposure
+    target_classes:
+    - '1'
+    - '2'
+    - '3'
+    missing_values: false
+    notes: No missing values.
+  iris:
+    file_name:
+    - iris.csv
+    n_instances: 150
+    n_features: 4
+    class_attribute: class
+    numeric_attributes:
+    - sepal_length
+    - sepal_width
+    - petal_length
+    - petal_width
+    categorical_attributes: []
+    target_classes:
+    - Iris-setosa
+    - Iris-versicolor
+    - Iris-virginica
+    missing_values: false
+    notes: No missing values
+  fertility:
+    file_name:
+    - fertility.csv
+    n_instances: 100
+    n_features: 9
+    class_attribute: diagnosis
+    numeric_attributes:
+    - season
+    - age
+    - child_diseases
+    - accident
+    - surgical_intervention
+    - high_fevers
+    - alcohol
+    - smoking
+    - hrs_sitting
+    categorical_attributes: []
+    target_classes:
+    - N
+    - O
+    missing_values: false
+    notes: No missing values.
+  hill-valley:
+    file_name:
+    - hill-valley.csv
+    n_instances: 1212
+    n_features: 100
+    class_attribute: class
+    numeric_attributes:
+    - X1
+    - X2
+    - X3
+    - X4
+    - X5
+    - X6
+    - X7
+    - X8
+    - X9
+    - X10
+    - X11
+    - X12
+    - X13
+    - X14
+    - X15
+    - X16
+    - X17
+    - X18
+    - X19
+    - X20
+    - X21
+    - X22
+    - X23
+    - X24
+    - X25
+    - X26
+    - X27
+    - X28
+    - X29
+    - X30
+    - X31
+    - X32
+    - X33
+    - X34
+    - X35
+    - X36
+    - X37
+    - X38
+    - X39
+    - X40
+    - X41
+    - X42
+    - X43
+    - X44
+    - X45
+    - X46
+    - X47
+    - X48
+    - X49
+    - X50
+    - X51
+    - X52
+    - X53
+    - X54
+    - X55
+    - X56
+    - X57
+    - X58
+    - X59
+    - X60
+    - X61
+    - X62
+    - X63
+    - X64
+    - X65
+    - X66
+    - X67
+    - X68
+    - X69
+    - X70
+    - X71
+    - X72
+    - X73
+    - X74
+    - X75
+    - X76
+    - X77
+    - X78
+    - X79
+    - X80
+    - X81
+    - X82
+    - X83
+    - X84
+    - X85
+    - X86
+    - X87
+    - X88
+    - X89
+    - X90
+    - X91
+    - X92
+    - X93
+    - X94
+    - X95
+    - X96
+    - X97
+    - X98
+    - X99
+    - X100
+    categorical_attributes: []
+    target_classes:
+    - '0'
+    - '1'
+    missing_values: false
+    notes: No missing values.
+  letter:
+    file_name:
+    - letter.csv
+    n_instances: 20000
+    n_features: 16
+    class_attribute: class
+    numeric_attributes:
+    - x_box
+    - y_box
+    - width
+    - high
+    - onpix
+    - x_bar
+    - y_bar
+    - x2bar
+    - y2bar
+    - xybar
+    - x2ybr
+    - xy2br
+    - xege
+    - xegvy
+    - yege
+    - yegvx
+    categorical_attributes: []
+    target_classes:
+    - A
+    - B
+    - C
+    - D
+    - E
+    - F
+    - G
+    - H
+    - I
+    - J
+    - K
+    - L
+    - M
+    - N
+    - O
+    - P
+    - Q
+    - R
+    - S
+    - T
+    - U
+    - V
+    - W
+    - X
+    - Y
+    - Z
+    missing_values: false
+    notes: No missing values.
+  libras:
+    file_name:
+    - libras.csv
+    n_instances: 360
+    n_features: 90
+    class_attribute: class
+    numeric_attributes:
+    - 1_a
+    - 1_o
+    - 2_a
+    - 2_o
+    - 3_a
+    - 3_o
+    - 4_a
+    - 4_o
+    - 5_a
+    - 5_o
+    - 6_a
+    - 6_o
+    - 7_a
+    - 7_o
+    - 8_a
+    - 8_o
+    - 9_a
+    - 9_o
+    - 10_a
+    - 10_o
+    - 11_a
+    - 11_o
+    - 12_a
+    - 12_o
+    - 13_a
+    - 13_o
+    - 14_a
+    - 14_o
+    - 15_a
+    - 15_o
+    - 16_a
+    - 16_o
+    - 17_a
+    - 17_o
+    - 18_a
+    - 18_o
+    - 19_a
+    - 19_o
+    - 20_a
+    - 20_o
+    - 21_a
+    - 21_o
+    - 22_a
+    - 22_o
+    - 23_a
+    - 23_o
+    - 24_a
+    - 24_o
+    - 25_a
+    - 25_o
+    - 26_a
+    - 26_o
+    - 27_a
+    - 27_o
+    - 28_a
+    - 28_o
+    - 29_a
+    - 29_o
+    - 30_a
+    - 30_o
+    - 31_a
+    - 31_o
+    - 32_a
+    - 32_o
+    - 33_a
+    - 33_o
+    - 34_a
+    - 34_o
+    - 35_a
+    - 35_o
+    - 36_a
+    - 36_o
+    - 37_a
+    - 37_o
+    - 38_a
+    - 38_o
+    - 39_a
+    - 39_o
+    - 40_a
+    - 40_o
+    - 41_a
+    - 41_o
+    - 42_a
+    - 42_o
+    - 43_a
+    - 43_o
+    - 44_a
+    - 44_o
+    - 45_a
+    - 45_o
+    categorical_attributes: []
+    target_classes:
+    - '1'
+    - '2'
+    - '3'
+    - '4'
+    - '5'
+    - '6'
+    - '7'
+    - '8'
+    - '9'
+    - '10'
+    - '11'
+    - '12'
+    - '13'
+    - '14'
+    - '15'
+    missing_values: false
+    notes: No missing values.
+  miniboone:
+    file_name:
+    - miniboone-1.csv
+    - miniboone-2.csv
+    n_instances: 130065
+    n_features: 50
+    class_attribute: class
+    numeric_attributes:
+    - atr_1
+    - atr_2
+    - atr_3
+    - atr_4
+    - atr_5
+    - atr_6
+    - atr_7
+    - atr_8
+    - atr_9
+    - atr_10
+    - atr_11
+    - atr_12
+    - atr_13
+    - atr_14
+    - atr_15
+    - atr_16
+    - atr_17
+    - atr_18
+    - atr_19
+    - atr_20
+    - atr_21
+    - atr_22
+    - atr_23
+    - atr_24
+    - atr_25
+    - atr_26
+    - atr_27
+    - atr_28
+    - atr_29
+    - atr_30
+    - atr_31
+    - atr_32
+    - atr_33
+    - atr_34
+    - atr_35
+    - atr_36
+    - atr_37
+    - atr_38
+    - atr_39
+    - atr_40
+    - atr_41
+    - atr_42
+    - atr_43
+    - atr_44
+    - atr_45
+    - atr_46
+    - atr_47
+    - atr_48
+    - atr_49
+    - atr_50
+    categorical_attributes: []
+    target_classes:
+    - '0'
+    - '1'
+    missing_values: false
+    notes: No missing values.
+  skin:
+    file_name:
+    - skin.csv
+    n_instances: 245057
+    n_features: 3
+    class_attribute: class
+    numeric_attributes:
+    - b
+    - g
+    - r
+    categorical_attributes: []
+    target_classes:
+    - '1'
+    - '2'
+    missing_values: false
+    notes: No missing values.
+  wdbc:
+    file_name:
+    - wdbc.csv
+    n_instances: 569
+    n_features: 31
+    class_attribute: class
+    numeric_attributes:
+    - radius
+    - texture
+    - perimeter
+    - area
+    - smoothness
+    - compactness
+    - concavity
+    - concave_points
+    - symmetry
+    - fractal_dimension
+    - radius_se
+    - texture_se
+    - perimeter_se
+    - area_se
+    - smoothness_se
+    - compactness_se
+    - concavity_se
+    - concave_points_se
+    - symmetry_se
+    - fractal_dimension_se
+    - radius_worst
+    - texture_worst
+    - perimeter_worst
+    - area_worst
+    - smoothness_worst
+    - compactness_worst
+    - concavity_worst
+    - concave_points_worst
+    - symmetry_worst
+    - fractal_dimension_worst
+    categorical_attributes: []
+    target_classes:
+    - B
+    - M
+    missing_values: false
+    notes: No missing values. Ignoring 'id' column.
+  wine-red:
+    file_name:
+    - wine-red.csv
+    n_instances: 1599
+    n_features: 11
+    class_attribute: quality
+    numeric_attributes:
+    - fixed_acidity
+    - volatile_acidity
+    - citric_acid
+    - residual_sugar
+    - chlorides
+    - free_sulfur_dioxide
+    - total_sulfur_dioxide
+    - density
+    - pH
+    - sulphates
+    - alcohol
+    categorical_attributes: []
+    target_classes:
+    - '3'
+    - '4'
+    - '5'
+    - '6'
+    - '7'
+    - '8'
+    missing_values: false
+    notes: No missing values.
+  wine-white:
+    file_name:
+    - wine-white.csv
+    n_instances: 4898
+    n_features: 11
+    class_attribute: quality
+    numeric_attributes:
+    - fixed_acidity
+    - volatile_acidity
+    - citric_acid
+    - residual_sugar
+    - chlorides
+    - free_sulfur_dioxide
+    - total_sulfur_dioxide
+    - density
+    - pH
+    - sulphates
+    - alcohol
+    categorical_attributes: []
+    target_classes:
+    - '3'
+    - '4'
+    - '5'
+    - '6'
+    - '7'
+    - '8'
+    - '9'
+    missing_values: false
+    notes: No missing values.
+  wine:
+    file_name:
+    - wine.csv
+    n_instances: 178
+    n_features: 13
+    class_attribute: class
+    numeric_attributes:
+    - alcohol
+    - malic_acid
+    - ash
+    - alcalinity_ash
+    - magnesium
+    - total_phenols
+    - flavanoids
+    - nonflavanoid_phenols
+    - proanthocyanins
+    - color_intensity
+    - hue
+    - OD280_OD315_of_diluted_wines
+    - proline
+    categorical_attributes: []
+    target_classes:
+    - '1'
+    - '2'
+    - '3'
+    missing_values: false
+    notes: No missing values.
+  covertype:
+    file_name:
+    - covertype-1.csv
+    - covertype-2.csv
+    - covertype-3.csv
+    n_instances: 581014
+    n_features: 54
+    class_attribute: Cover_Type
+    numeric_attributes:
+    - Elevation
+    - Aspect
+    - Slope
+    - Horizontal_Distance_To_Hydrology
+    - Vertical_Distance_To_Hydrology
+    - Horizontal_Distance_To_Roadways
+    - Hillshade_9am
+    - Hillshade_Noon
+    - Hillshade_3pm
+    - Horizontal_Distance_To_Fire_Points
+    - Wilderness_Area1
+    - Wilderness_Area2
+    - Wilderness_Area3
+    - Wilderness_Area4
+    - Soil_Type1
+    - Soil_Type2
+    - Soil_Type3
+    - Soil_Type4
+    - Soil_Type5
+    - Soil_Type6
+    - Soil_Type7
+    - Soil_Type8
+    - Soil_Type9
+    - Soil_Type10
+    - Soil_Type11
+    - Soil_Type12
+    - Soil_Type13
+    - Soil_Type14
+    - Soil_Type15
+    - Soil_Type16
+    - Soil_Type17
+    - Soil_Type18
+    - Soil_Type19
+    - Soil_Type20
+    - Soil_Type21
+    - Soil_Type22
+    - Soil_Type23
+    - Soil_Type24
+    - Soil_Type25
+    - Soil_Type26
+    - Soil_Type27
+    - Soil_Type28
+    - Soil_Type29
+    - Soil_Type30
+    - Soil_Type31
+    - Soil_Type32
+    - Soil_Type33
+    - Soil_Type34
+    - Soil_Type35
+    - Soil_Type36
+    - Soil_Type37
+    - Soil_Type38
+    - Soil_Type39
+    - Soil_Type40
+    categorical_attributes: []
+    target_classes:
+    - '1'
+    - '2'
+    - '3'
+    - '4'
+    - '5'
+    - '6'
+    - '7'
+    missing_values: false
+    notes: No missing values.

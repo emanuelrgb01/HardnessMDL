@@ -2,6 +2,7 @@ from .pygmdl import GMDL
 
 import numpy as np
 from typing import List, Dict, Any, Optional
+from scipy.stats import entropy
 
 
 Sample = Dict[str, Any]
@@ -20,6 +21,37 @@ class HardnessMDL(GMDL):
 
     def __init__(self, n_classes: int, n_dims: int, seed: int = 42):
         super().__init__(n_classes, n_dims, seed)
+
+    def predict(self, features: np.ndarray) -> Prediction:
+        """
+        Predicts the class label for a single sample.
+
+        Args:
+            features: A 1D NumPy array of feature values.
+
+        Returns:
+            A Prediction dictionary containing the predicted 'label' and the
+            'description_lengths' for each class.
+        """
+        distances = self._get_distances(features)
+
+        description_lengths_unnormalized = np.array(
+            [self._L_hat(features, c, distances) for c in range(self.n_classes)]
+        )
+
+        l_total = np.sum(description_lengths_unnormalized)
+        if np.isclose(l_total, 0):
+            description_lengths = np.full(self.n_classes, 1.0 / self.n_classes)
+        else:
+            description_lengths = description_lengths_unnormalized / l_total
+
+        predicted_label = np.argmin(description_lengths)
+
+        return {
+            "label": predicted_label,
+            "description_lengths": description_lengths,
+            "description_lengths_unnormalized": description_lengths_unnormalized,
+        }
 
     def hardness(self, features: np.ndarray, label: int) -> dict[str, float]:
         """Compute multiple hardness measures for a given instance.
@@ -52,6 +84,15 @@ class HardnessMDL(GMDL):
             "relative_position": self._relative_position(description_lengths, label),
             "pseudo_probability": self._pseudo_probability(description_lengths, label),
             "normalized_entropy": self._normalized_entropy(description_lengths),
+            "description_length_margin": self._description_length_margin(
+                description_lengths, label
+            ),
+            "description_length_true_cost": self._description_length_true_cost(
+                description_lengths, label
+            ),
+            "kullback_leibler_divergence": self._kullback_leibler_divergence(
+                description_lengths, label
+            ),
         }
 
     def _r_min(self, description_lenghts: np.ndarray, label: int) -> float:
@@ -141,3 +182,46 @@ class HardnessMDL(GMDL):
         H = np.dot(pseudo_probabilities, description_lenghts)
 
         return H / self.n_dims
+
+    def _description_length_margin(
+        self, description_lenghts: np.ndarray, label: int
+    ) -> float:
+        """Compute description length margin.
+
+        Based on the two smallest description lengths; higher value means smaller gap -> harder.
+        """
+        eps = 1e-9
+        sorted_dls = np.sort(description_lenghts)
+        if len(sorted_dls) > 1:
+            margin = sorted_dls[1] - sorted_dls[0]
+            return float(1.0 - (margin / (np.sum(sorted_dls) + eps)))
+        return 0.0
+
+    def _description_length_true_cost(
+        self, description_lenghts: np.ndarray, label: int
+    ) -> float:
+        """Cost of the true class description length relative to total."""
+        eps = 1e-9
+        dl_true = description_lenghts[label]
+        return float(dl_true / (np.sum(description_lenghts) + eps))
+
+    def _kullback_leibler_divergence(
+        self, description_lenghts: np.ndarray, label: int
+    ) -> float:
+        """KL divergence between an ideal distribution (all mass on true label) and the pseudo-probabilities.
+
+        Result is squashed via logistic to keep values in (0,1).
+        """
+        eps = 1e-9
+        n_classes = len(description_lenghts)
+
+        # build pseudo-probabilities consistent with compute_hardness_measures
+        probs = np.exp(-(description_lenghts - np.min(description_lenghts)))
+        probs = probs / (np.sum(probs) + eps)
+
+        ideal_dist = np.full(n_classes, eps)
+        ideal_dist[label] = 1.0
+        ideal_dist = ideal_dist / np.sum(ideal_dist)
+
+        kl_div = entropy(pk=ideal_dist, qk=probs, base=2)
+        return float(1.0 / (1.0 + np.exp(-kl_div)))
